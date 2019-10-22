@@ -6,7 +6,7 @@
 /*   By: lgrellie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 14:37:10 by lgrellie          #+#    #+#             */
-/*   Updated: 2019/10/22 18:15:37 by lgrellie         ###   ########.fr       */
+/*   Updated: 2019/10/22 19:31:36 by lgrellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	gnl_output(const char *path)
 	for (int i = 0; i <= 14 + strlen(path); ++i)
 		outpath[i] = i < 14 ? output[i] : path[6 + i - 14];
 	
-	int out_fd = open(outpath, O_CREAT | O_WRONLY, S_IRWXU);
+	int out_fd = open(outpath, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
 	//printf("%d\t%d\t%s\n", fd, out_fd, outpath);
 loop:
 	switch(get_next_line(fd, &line))
