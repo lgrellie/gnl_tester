@@ -6,7 +6,7 @@
 /*   By: lgrellie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 14:37:10 by lgrellie          #+#    #+#             */
-/*   Updated: 2019/10/22 19:31:36 by lgrellie         ###   ########.fr       */
+/*   Updated: 2019/10/23 15:43:24 by lgrellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ loop:
 			free(line);
 			goto loop;
 		case 0:
-			ft_putstr_fd(line, out_fd);
 			free(line);
 			close(fd);
 			close(out_fd);
