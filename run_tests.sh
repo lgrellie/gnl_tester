@@ -3,7 +3,7 @@ if [[ "$#" -ne 1 ]]; then
 	echo "./run_tests \$BUFFER_SIZE";
 else
 	./clean.sh
-	gcc main.c get_next_line.c get_next_line_utils.c -D BUFFER_SIZE=$1;
+	gcc -fsanitize=address main.c get_next_line.c get_next_line_utils.c -D BUFFER_SIZE=$1;
 	./generate_tests.sh;
 	./a.out tests/*.txt;
 	for file in tests/*.txt; do
