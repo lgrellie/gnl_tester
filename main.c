@@ -6,7 +6,7 @@
 /*   By: lgrellie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 14:37:10 by lgrellie          #+#    #+#             */
-/*   Updated: 2019/10/23 19:07:52 by lgrellie         ###   ########.fr       */
+/*   Updated: 2019/10/23 19:44:58 by lgrellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,33 @@ void		ft_putendl_fd(char *s, int fd)
 	write(fd, "\n", 1);
 }
 
+int	gnl_random()
+{
+	int fd = open("/dev/random", O_RDONLY);
+	char *line;
+	char outpath[] = "output/dump.txt";
+	int out_fd = open(outpath, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
+loop:
+	switch(get_next_line(fd, &line))
+	{
+		case 1:
+			ft_putendl_fd(line, out_fd);
+			free(line);
+			goto loop;
+		case 0:
+			free(line);
+			close(fd);
+			close(out_fd);
+			return (0);
+		case -1:
+			ft_putstr_fd("@@@@@@@@@@ERROR@@@@@@@@@@", out_fd);
+			free(line);
+			close(fd);
+			close(out_fd);
+			return (-1);
+	}
+	return (-1);
+}
 int	gnl_output(const char *path)
 {
 	int fd = open(path, O_RDONLY);
@@ -40,9 +67,8 @@ int	gnl_output(const char *path)
 	outpath = malloc(14 + strlen(path) + 1);
 	for (int i = 0; i <= 14 + strlen(path); ++i)
 		outpath[i] = i < 14 ? output[i] : path[6 + i - 14];
-	
+
 	int out_fd = open(outpath, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
-	//printf("%d\t%d\t%s\n", fd, out_fd, outpath);
 loop:
 	switch(get_next_line(fd, &line))
 	{
@@ -95,10 +121,10 @@ deb:
 
 int main(int ac, const char **av)
 {
-	if (ac < 2)
+	if (ac == 1)
 	{
-		printf("program path\n");
-		return (1);
+		gnl_random();
+		return (0);
 	}
 	else
 	{
