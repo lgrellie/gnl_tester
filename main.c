@@ -6,7 +6,7 @@
 /*   By: lgrellie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 14:37:10 by lgrellie          #+#    #+#             */
-/*   Updated: 2019/10/23 19:44:58 by lgrellie         ###   ########.fr       */
+/*   Updated: 2019/10/24 10:46:18 by lgrellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,13 @@ loop:
 			free(line);
 			goto loop;
 		case 0:
+			ft_putstr_fd(line, out_fd);
 			free(line);
 			close(fd);
 			close(out_fd);
 			return (0);
 		case -1:
-			ft_putstr_fd("@@@@@@@@@@ERROR@@@@@@@@@@", out_fd);
+			ft_putstr_fd("@@@ERROR@@@", out_fd);
 			free(line);
 			close(fd);
 			close(out_fd);
@@ -77,12 +78,13 @@ loop:
 			free(line);
 			goto loop;
 		case 0:
+			ft_putstr_fd(line, out_fd);
 			free(line);
 			close(fd);
 			close(out_fd);
 			return (0);
 		case -1:
-			ft_putstr_fd("@@@@@@@@@@ERROR@@@@@@@@@@", out_fd);
+			ft_putstr_fd("@@@ERROR@@@", out_fd);
 			free(line);
 			close(fd);
 			close(out_fd);
@@ -147,7 +149,7 @@ int main(int ac, const char **av)
 			}
 			++i;
 		}
-		printf("Tests taken: %d\tTests passed: %d\tTests failed: %d\n", ac - 1, tests_passed, tests_failed);
+		printf("Files opened: %d\tReached EOF: %d\tEnded w/ -1: %d\n", ac - 1, tests_passed, tests_failed);
 		return (0);
 	}
 }
