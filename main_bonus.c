@@ -6,7 +6,7 @@
 /*   By: lgrellie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 14:37:10 by lgrellie          #+#    #+#             */
-/*   Updated: 2019/10/25 13:49:33 by lgrellie         ###   ########.fr       */
+/*   Updated: 2019/10/25 19:54:51 by lgrellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void		ft_putendl_fd(char *s, int fd)
 int	gnl_random()
 {
 	int fd = open("/dev/random", O_RDONLY);
-	char *line;
+	char *line = NULL;
 	char outpath[] = "output/dump.txt";
 	int out_fd = open(outpath, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
 loop:
@@ -52,21 +52,21 @@ loop:
 			return (0);
 		case -1:
 			ft_putstr_fd("@@@ERROR@@@", out_fd);
-			free(line);
 			close(fd);
 			close(out_fd);
 			return (-1);
 	}
 	return (-1);
 }
+
 int	gnl_output(const char *path, int *fd)
 {
 	*fd = open(path, O_RDONLY);
-	char *line;
-	char *outpath;
+	char *line = NULL;
+	char outpath[128];
 	char output[] = "output/output_";
-	outpath = malloc(14 + strlen(path) + 1);
-	for (int i = 0; i <= 14 + strlen(path); ++i)
+	size_t i;
+	for (i = 0; i <= 14 + strlen(path); ++i)
 		outpath[i] = i < 14 ? output[i] : path[6 + i - 14];
 
 	int out_fd = open(outpath, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
@@ -84,7 +84,6 @@ loop:
 			return (0);
 		case -1:
 			ft_putstr_fd("@@@ERROR@@@", out_fd);
-			free(line);
 			close(out_fd);
 			return (-1);
 	}
@@ -94,7 +93,7 @@ loop:
 int gnl_tester(const char *path)
 {
 	int fd = open(path, O_RDONLY);
-	char *line;
+	char *line = NULL;
 
 	if (fd > 0)
 	{
