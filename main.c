@@ -6,7 +6,7 @@
 /*   By: lgrellie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 14:37:10 by lgrellie          #+#    #+#             */
-/*   Updated: 2019/10/25 14:20:01 by lgrellie         ###   ########.fr       */
+/*   Updated: 2019/10/28 16:08:06 by lgrellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,29 @@ int	gnl_random()
 	char outpath[] = "output/dump.txt";
 	int out_fd = open(outpath, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
 loop:
-	switch(get_next_line(fd, &line))
-	{
-		case 1:
-			ft_putendl_fd(line, out_fd);
-			free(line);
-			goto loop;
-		case 0:
-			ft_putstr_fd(line, out_fd);
-			free(line);
-			close(fd);
-			close(out_fd);
-			return (0);
-		case -1:
-			ft_putstr_fd("@@@ERROR@@@", out_fd);
-			free(line);
-			close(fd);
-			close(out_fd);
-			return (-1);
-	}
+	if (getchar() == '\n')
+		switch(get_next_line(fd, &line))
+		{
+			case 1:
+				ft_putendl_fd(line, out_fd);
+				free(line);
+				line = NULL;
+				goto loop;
+			case 0:
+				ft_putstr_fd(line, out_fd);
+				free(line);
+				line = NULL;
+				close(fd);
+				close(out_fd);
+				return (0);
+			case -1:
+				ft_putstr_fd("@@@ERROR@@@", out_fd);
+				free(line);
+				line = NULL;
+				close(fd);
+				close(out_fd);
+				return (-1);
+		}
 	return (-1);
 }
 int	gnl_output(const char *path)
@@ -77,16 +81,19 @@ loop:
 		case 1:
 			ft_putendl_fd(line, out_fd);
 			free(line);
+			line = NULL;
 			goto loop;
 		case 0:
 			ft_putstr_fd(line, out_fd);
 			free(line);
+			line = NULL;
 			close(fd);
 			close(out_fd);
 			return (0);
 		case -1:
 			ft_putstr_fd("@@@ERROR@@@", out_fd);
 			free(line);
+			line = NULL;
 			close(fd);
 			close(out_fd);
 			return (-1);
@@ -107,10 +114,12 @@ deb:
 			case 1:
 				printf("%s\n", line);
 				free(line);
+				line = NULL;
 				goto deb;
 			case 0:
 				printf("%sEOF\n", line);
 				free(line);
+				line = NULL;
 				close(fd);
 				return (0);
 			case -1:
