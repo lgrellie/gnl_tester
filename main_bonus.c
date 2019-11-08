@@ -74,56 +74,25 @@ int	gnl_output(const char *path, int *fd)
 
 	int out_fd = open(outpath, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
 loop:
-	if (getchar() == '\n')
-		switch(get_next_line(*fd, &line))
-		{
-			case 1:
-				ft_putendl_fd(line, out_fd);
-				free(line);
-				line = NULL;
-				goto loop;
-			case 0:
-				ft_putstr_fd(line, out_fd);
-				free(line);
-				line = NULL;
-				close(out_fd);
-				return (0);
-			case -1:
-				ft_putstr_fd("@@@ERROR@@@", out_fd);
-				close(out_fd);
-				return (-1);
-		}
-	return (-1);
-}
-
-int gnl_tester(const char *path)
-{
-	int fd = open(path, O_RDONLY);
-	char *line = NULL;
-
-	if (fd > 0)
+	switch(get_next_line(*fd, &line))
 	{
-deb:
-		switch (get_next_line(fd, &line))
-		{
-			case 1:
-				printf("%s\n", line);
-				free(line);
-				line = NULL;
-				goto deb;
-			case 0:
-				printf("%sEOF\n", line);
-				free(line);
-				line = NULL;
-				close(fd);
-				return (0);
-			case -1:
-				printf("Houston, we got a problem...\n");
-				close(fd);
-				return (-1);
-		}
+		case 1:
+			ft_putendl_fd(line, out_fd);
+			free(line);
+			line = NULL;
+			goto loop;
+		case 0:
+			ft_putstr_fd(line, out_fd);
+			free(line);
+			line = NULL;
+			close(out_fd);
+			return (0);
+		case -1:
+			ft_putstr_fd("@@@ERROR@@@", out_fd);
+			close(out_fd);
+			return (-1);
 	}
-	return(-1);
+	return (-1);
 }
 
 int main(int ac, const char **av)
