@@ -73,7 +73,7 @@ int main(int ac, const char **av)
 {
 	if (ac == 1)
 	{
-		gnl_random();
+		printf("Need some paths as arguments!\n")
 		return (0);
 	}
 	else
