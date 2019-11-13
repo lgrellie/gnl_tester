@@ -99,7 +99,7 @@ int main(int ac, const char **av)
 {
 	if (ac == 1)
 	{
-		gnl_random();
+		printf("Gimme some file paths!\n");
 		return (0);
 	}
 	else
