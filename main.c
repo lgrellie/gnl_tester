@@ -58,6 +58,7 @@ loop:
 			line = NULL;
 			close(fd);
 			close(out_fd);
+			free(outpath);
 			return (0);
 		case -1:
 			ft_putstr_fd("@@@ERROR@@@", out_fd);
@@ -65,8 +66,10 @@ loop:
 			line = NULL;
 			close(fd);
 			close(out_fd);
+			free(outpath);
 			return (-1);
 	}
+	free(outpath);
 	return (-1);
 }
 
