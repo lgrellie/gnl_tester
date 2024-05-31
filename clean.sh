@@ -1,8 +1,7 @@
 #!/bin/bash
 
-rm -rf tests/file*.txt;
-rm -rf output/*.txt;
-rm -rf a.out;
-rm -rf diffs;
+rm -f tests/file*.txt;
+rm -f output/*.txt;
+rm -f diffs;
 rm -rf diffs_files;
-rm -rf a.out.dSYM/
+rm -f test_it
